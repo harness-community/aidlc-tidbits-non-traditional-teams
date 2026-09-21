@@ -75,9 +75,15 @@ No secrets or tokens are stored in this repo.
 
 ## Sample data at a glance
 
-The sample has **91 rows**: one CTO root (**priya raman**), four VPs, five
+The sample has **91 rows**: one CTO root (**ava collins**), four VPs, five
 directors, ten engineering managers, and ICs across engineering, product,
-design, and docs.
+design, and docs. Every name and email is dummy data.
+
+The org-tree grouping you will use most is **Business Unit → Department → Team**.
+The canonical path in this file is **Engineering → Payments → Checkout**.
+Engineering also has two sibling departments (**Platform**, **Data**). Two dummy
+BUs (**Product**, **Operations**) sit beside Engineering so a BU-level tree is
+not a single node.
 
 | Column | What it is for |
 |--------|----------------|
@@ -86,12 +92,13 @@ design, and docs.
 | `most common manager`, `most common manager email` | Who they actually work with most. Differs from reporting manager for **24** people (matrix) |
 | `location` | Region: `AMER`, `EMEA`, or `APAC` only |
 | `site` | Remote site aligned to region (`amer-remote`, `emea-remote`, `apac-remote`) |
-| `business unit` | `office of the cto`, `cloud platform`, `payments`, `data and ai`, `customer experience` |
-| `department` | `software development`, `site reliability`, `security`, `product`, `design`, `documentation` |
+| `business unit` | `Engineering` (primary), plus dummy `Product` and `Operations` |
+| `department` | Under Engineering: `Payments`, `Platform`, `Data`. Dummy BUs use `Experience` and `Reliability` |
+| `team` | Delivery team, e.g. `Checkout` under Payments. Also `Risk`, `Core`, `Identity`, `Metrics`, `Assist`, and dummy teams |
 | `squad` | Cross-functional delivery unit (e.g. `payments-checkout`, `platform-iam`) |
-| `tribe` | Cluster of squads: `platform tribe`, `checkout tribe`, `insights tribe`, `growth tribe` |
+| `tribe` | Cluster of squads: `platform tribe`, `payments tribe`, `insights tribe`, `growth tribe` |
 | `vendor` | Empty for employees; `Vendor A`, `Vendor B`, or `Vendor C` for contractors |
-| `team`, `role`, `sub role`, `sub-team`, `job-function`, `start date`, `executive`, `status` | Standard AIDI fields so you can still build a classic reporting tree |
+| `role`, `sub role`, `sub-team`, `job-function`, `start date`, `executive`, `status` | Standard AIDI fields so you can still build a classic reporting tree |
 
 Reporting lines stay intact: **one empty `manager email`** (the CTO). Re-upload
 keeps the tree in sync.
@@ -126,10 +133,10 @@ This is how you model standing cross-functional groups.
 
    | Levels | What you get |
    |--------|----------------|
+   | `Business Unit` → `Department` → `Team` | **Engineering → Payments → Checkout** (plus Platform/Data teams, and dummy Product / Operations BUs) |
    | `Tribe` → `Squad` | Four tribes, then squad-level leaf teams that cut across reporting lines |
    | `Vendor` | Three contractor populations plus employees (empty vendor) |
    | `Location` | `AMER` / `EMEA` / `APAC` |
-   | `Business Unit` → `Department` | BU rollup with department leaves |
    | `Most common manager` | Matrix view — people grouped by who they work with, not who they report to |
    | `Manager Email` | Classic org chart only. **No further levels** are allowed beneath it |
 
@@ -160,7 +167,8 @@ Then open **Insights**, pick the Org Tree that matches the question:
 
 | Question | Tree to use |
 |----------|-------------|
-| How is checkout shipping? | `Tribe` → `Squad`, open `payments-checkout` |
+| How is Checkout shipping? | `Business Unit` → `Department` → `Team`, open **Engineering / Payments / Checkout** |
+| How is checkout shipping by squad? | `Tribe` → `Squad`, open `payments-checkout` |
 | How is Vendor B performing? | Tree leveled on `Vendor` |
 | How is AMER vs EMEA vs APAC? | Tree leveled on `Location` |
 | Who actually manages this person's work? | Tree leveled on `Most common manager` |
@@ -186,8 +194,10 @@ options.
 **Expect design, docs, and product to look quiet** on Efficiency and
 Productivity. Business Alignment still works because it runs on tickets.
 
-**Do not over-nest.** `Tribe` → `Squad` is enough for this file. Adding
-location under every squad usually just adds clicks.
+**Do not over-nest.** `Business Unit` → `Department` → `Team` is the intended
+tree for this file (`Engineering` → `Payments` → `Checkout`). `Tribe` → `Squad`
+is the cross-functional alternative. Adding location under every team usually
+just adds clicks.
 
 ---
 
